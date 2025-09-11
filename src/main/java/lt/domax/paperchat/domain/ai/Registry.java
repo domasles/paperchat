@@ -21,7 +21,8 @@ public class Registry {
             config.getApiKey(),
             config.getModel(),
             config.getTemperature(),
-            config.getTimeout()
+            config.getTimeout(),
+            config.getSystemPrompt()
         );
 
         providers.put("openai", openaiProvider);
@@ -30,7 +31,8 @@ public class Registry {
             config.getApiKey(),
             config.getModel(),
             config.getTemperature(),
-            config.getTimeout()
+            config.getTimeout(),
+            config.getSystemPrompt()
         );
 
         providers.put("google", googleProvider);

@@ -15,8 +15,8 @@ public class OpenAIProvider extends Provider {
     private final OkHttpClient client;
     private final String endpoint = "https://api.openai.com/v1/chat/completions";
 
-    public OpenAIProvider(String apiKey, String model, double temperature, int timeout) {
-        super(apiKey, model, temperature, timeout);
+    public OpenAIProvider(String apiKey, String model, double temperature, int timeout, String systemPrompt) {
+        super(apiKey, model, temperature, timeout, systemPrompt);
         this.client = new OkHttpClient.Builder().connectTimeout(timeout, TimeUnit.SECONDS).readTimeout(timeout, TimeUnit.SECONDS).build();
     }
 
