@@ -1,0 +1,12 @@
+# Config directories
+.vscode/
+
+# Build outputs
+build/
+bin/
+out/
+
+# Gradle specific
+.gradle/
+gradle/
+gradle*

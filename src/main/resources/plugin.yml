@@ -1,0 +1,11 @@
+name: PaperChat
+version: 1.0-SNAPSHOT
+main: lt.domax.paperchat.PaperChat
+api-version: 1.21
+author: Domas Leščinskas
+description: Play Minecraft and have an LLM baked right in!
+
+commands:
+  wmod:
+    description: Chat with an AI chatbot
+    usage: /paperchat <user> <message>
