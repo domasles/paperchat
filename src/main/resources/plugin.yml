@@ -6,6 +6,12 @@ author: Domas Leščinskas
 description: Play Minecraft and have an LLM baked right in!
 
 commands:
-  wmod:
+  paperchat:
     description: Chat with an AI chatbot
-    usage: /paperchat <user> <message>
+    usage: /paperchat <player> <message>
+    permission: paperchat.use
+
+permissions:
+  paperchat.use:
+    description: Allows using the paperchat command
+    default: true

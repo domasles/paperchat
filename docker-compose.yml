@@ -1,0 +1,30 @@
+services:
+  mc-server1:
+    image: itzg/minecraft-server:java21
+    container_name: mc-server
+    restart: unless-stopped
+
+    ports:
+      - "25565:25565"
+
+    environment:
+      EULA: "TRUE"
+      TYPE: PAPER
+      VERSION: "1.21.1"
+      MEMORY: 5G
+      ONLINE_MODE: "FALSE"
+      SERVER_PORT: 25565
+      ALLOW_CHEATS: "TRUE"
+
+      PAPERCHAT_API_KEY: ${PAPERCHAT_API_KEY}
+      PAPERCHAT_MAX_HISTORY: ${PAPERCHAT_MAX_HISTORY}
+      PAPERCHAT_PROVIDER: ${PAPERCHAT_PROVIDER}
+      PAPERCHAT_MODEL: ${PAPERCHAT_MODEL}
+      PAPERCHAT_TEMPERATURE: ${PAPERCHAT_TEMPERATURE}
+      PAPERCHAT_TIMEOUT: ${PAPERCHAT_TIMEOUT}
+
+    volumes:
+      - ./build/libs:/data/plugins
+
+    stdin_open: true
+    tty: true

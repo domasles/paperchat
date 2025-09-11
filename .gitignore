@@ -10,3 +10,6 @@ out/
 .gradle/
 gradle/
 gradle*
+
+# Environment variables
+.env
