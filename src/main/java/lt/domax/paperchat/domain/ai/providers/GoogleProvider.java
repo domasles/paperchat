@@ -1,11 +1,9 @@
 package lt.domax.paperchat.domain.ai.providers;
 
 import lt.domax.paperchat.domain.ai.Provider;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonArray;
-
 import okhttp3.*;
 
 import java.util.concurrent.CompletableFuture;
@@ -51,11 +49,11 @@ public class GoogleProvider extends Provider {
                     MediaType.parse("application/json")
                 );
 
-                String url = endpoint + "/v1beta/models/" + model + ":generateContent?key=" + apiKey;
-                Request request = new Request.Builder().url(url).header("Content-Type", "application/json").post(body).build();
+                String url = endpoint + "/v1beta/models/" + model + ":generateContent";
+                Request request = new Request.Builder().url(url).header("x-goog-api-key", apiKey).header("Content-Type", "application/json").post(body).build();
 
                 try (Response response = client.newCall(request).execute()) {
-                    if (!response.isSuccessful()) return "Error: Failed to get AI response (HTTP " + response.code() + ")";
+                    if (!response.isSuccessful()) return "{\"message\": \"Error: Failed to get AI response (HTTP " + response.code() + ")\"}";
 
                     String responseBody = response.body().string();
                     JsonObject jsonResponse = JsonParser.parseString(responseBody).getAsJsonObject();
@@ -65,15 +63,26 @@ public class GoogleProvider extends Provider {
                         JsonObject responseContent = candidate.getAsJsonObject("content");
                         JsonArray responseParts = responseContent.getAsJsonArray("parts");
 
-                        if (responseParts.size() > 0) return responseParts.get(0).getAsJsonObject().get("text").getAsString().trim();
+                        if (responseParts.size() > 0) {
+                            String aiResponse = responseParts.get(0).getAsJsonObject().get("text").getAsString().trim();
+
+                            try {
+                                JsonParser.parseString(aiResponse);
+                                return aiResponse;
+                            }
+
+                            catch (Exception e) {
+                                return "{\"message\": \"" + aiResponse.replace("\"", "\\\"") + "\"}";
+                            }
+                        }
                     }
 
-                    return "Error: Invalid response format from AI";
+                    return "{\"message\": \"Error: Invalid response format from AI\"}";
                 }
             }
 
             catch (Exception e) {
-                return "Error: " + e.getMessage();
+                return "{\"message\": \"Error: " + e.getMessage() + "\"}";
             }
         });
     }

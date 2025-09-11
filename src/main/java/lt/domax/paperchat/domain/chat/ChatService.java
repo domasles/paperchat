@@ -4,9 +4,11 @@ import lt.domax.paperchat.domain.player.PlayerChatManager;
 import lt.domax.paperchat.domain.ai.Registry;
 
 import org.bukkit.entity.Player;
-import org.bukkit.Bukkit;
 
-import java.util.concurrent.CompletableFuture;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import org.bukkit.Bukkit;
 
 public class ChatService {
     private final Registry aiRegistry;
@@ -35,11 +37,21 @@ public class ChatService {
         String conversationHistory = session.getConversationHistory();
         String prompt = session.hasHistory() ? aiRegistry.getActiveProvider().formatPrompt(message, conversationHistory) : message;
 
-        aiRegistry.sendMessage(prompt)
-            .thenAccept(response -> {
-                session.addMessage(senderName, message, response);
+        aiRegistry.sendMessage(prompt).thenAccept(response -> {
+                String actualMessage;
 
-                String formattedMessage = "§6[AI]: §f" + response;
+                try {
+                    JsonObject jsonResponse = JsonParser.parseString(response).getAsJsonObject();
+                    actualMessage = jsonResponse.get("message").getAsString();
+                }
+
+                catch (Exception e) {
+                    actualMessage = "AI response format error: " + response;
+                }
+
+                session.addMessage(senderName, message, actualMessage);
+
+                String formattedMessage = "§6[AI]: §f" + actualMessage;
                 Bukkit.getScheduler().runTask(Bukkit.getPluginManager().getPlugin("PaperChat"), () -> { targetPlayer.sendMessage(formattedMessage); });
             })
 

@@ -47,7 +47,7 @@ public class OpenAIProvider extends Provider {
                 Request request = new Request.Builder().url(endpoint).header("Authorization", "Bearer " + apiKey).header("Content-Type", "application/json").post(body).build();
 
                 try (Response response = client.newCall(request).execute()) {
-                    if (!response.isSuccessful()) return "Error: Failed to get AI response (HTTP " + response.code() + ")";
+                    if (!response.isSuccessful()) return "{\"message\": \"Error: Failed to get AI response (HTTP " + response.code() + ")\"}";
 
                     String responseBody = response.body().string();
                     JsonObject jsonResponse = JsonParser.parseString(responseBody).getAsJsonObject();
@@ -56,15 +56,24 @@ public class OpenAIProvider extends Provider {
                         JsonObject choice = jsonResponse.getAsJsonArray("choices").get(0).getAsJsonObject();
                         JsonObject message = choice.getAsJsonObject("message");
 
-                        return message.get("content").getAsString().trim();
+                        String aiResponse = message.get("content").getAsString().trim();
+
+                        try {
+                            JsonParser.parseString(aiResponse);
+                            return aiResponse;
+                        }
+
+                        catch (Exception e) {
+                            return "{\"message\": \"" + aiResponse.replace("\"", "\\\"") + "\"}";
+                        }
                     }
 
-                    return "Error: Invalid response format from AI";
+                    return "{\"message\": \"Error: Invalid response format from AI\"}";
                 }
             }
 
             catch (Exception e) {
-                return "Error: " + e.getMessage();
+                return "{\"message\": \"Error: " + e.getMessage() + "\"}";
             }
         });
     }
