@@ -50,8 +50,8 @@ public class Registry {
     }
 
     public CompletableFuture<String> sendMessage(String prompt) {
-        if (activeProvider == null) return CompletableFuture.completedFuture("Error: No AI provider configured");
-        if (!activeProvider.isAvailable()) return CompletableFuture.completedFuture("Error: AI provider not available");
+        if (activeProvider == null) return CompletableFuture.completedFuture("{\"message\": \"I'm not properly configured. Please contact an administrator.\"}");
+        if (!activeProvider.isAvailable()) return CompletableFuture.completedFuture("{\"message\": \"I'm temporarily unavailable. Please try again later.\"}");
 
         return activeProvider.sendMessage(prompt);
     }

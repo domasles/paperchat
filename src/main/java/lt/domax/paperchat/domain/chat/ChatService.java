@@ -47,7 +47,7 @@ public class ChatService {
                 }
 
                 catch (Exception e) {
-                    actualMessage = "AI response format error: " + response;
+                    actualMessage = extractMessageFromResponse(response);
                 }
 
                 session.addMessage(senderName, message, actualMessage);
@@ -57,13 +57,48 @@ public class ChatService {
             })
 
             .exceptionally(throwable -> {
-                String errorMessage = "§cError: Failed to get AI response - " + throwable.getMessage();
+                String errorMessage = "§c[AI]: I'm experiencing technical difficulties. Please try again later.";
                 Bukkit.getScheduler().runTask(Bukkit.getPluginManager().getPlugin("PaperChat"), () -> { notifyPlayer(senderName, errorMessage); });
 
                 return null;
             });
 
         notifyPlayer(senderName, "§aAI is thinking... Response will be sent to " + targetPlayerName);
+    }
+
+    private String extractMessageFromResponse(String response) {
+        try {
+            JsonObject jsonResponse = JsonParser.parseString(response).getAsJsonObject();
+
+            if (jsonResponse.has("message")) {
+                String message = jsonResponse.get("message").getAsString();
+                return "Sorry, I had trouble formatting my response. Here's what I meant: " + message;
+            }
+        }
+
+        catch (Exception e) {}
+        
+        try {
+            String cleanedResponse = response.trim();
+
+            if (cleanedResponse.startsWith("\"") && cleanedResponse.endsWith("\"")) {
+                cleanedResponse = cleanedResponse.substring(1, cleanedResponse.length() - 1);
+            }
+
+            if (!cleanedResponse.startsWith("{") && !cleanedResponse.startsWith("[")) {
+                return cleanedResponse.replace("\\\"", "\"").replace("\\n", "\n").trim();
+            }
+
+            JsonObject jsonResponse = JsonParser.parseString(cleanedResponse).getAsJsonObject();
+
+            if (jsonResponse.has("message")) {
+                return "Sorry, I had trouble formatting my response. Here's what I meant: " + jsonResponse.get("message").getAsString();
+            }
+            
+        }
+
+        catch (Exception e) {}
+        return "I encountered a formatting issue. Please try asking your question again.";
     }
 
     private void notifyPlayer(String playerName, String message) {

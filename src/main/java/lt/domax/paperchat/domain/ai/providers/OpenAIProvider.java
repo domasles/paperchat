@@ -65,7 +65,7 @@ public class OpenAIProvider extends Provider {
                 Request request = new Request.Builder().url(endpoint).header("Authorization", "Bearer " + apiKey).header("Content-Type", "application/json").post(body).build();
 
                 try (Response response = client.newCall(request).execute()) {
-                    if (!response.isSuccessful()) return "{\"message\": \"Error: Failed to get AI response (HTTP " + response.code() + ")\"}";
+                    if (!response.isSuccessful()) return "{\"message\": \"I'm having trouble connecting right now. Please try again in a moment.\"}";
 
                     String responseBody = response.body().string();
                     JsonObject jsonResponse = JsonParser.parseString(responseBody).getAsJsonObject();
@@ -86,12 +86,12 @@ public class OpenAIProvider extends Provider {
                         }
                     }
 
-                    return "{\"message\": \"Error: Invalid response format from AI\"}";
+                    return "{\"message\": \"I couldn't process your request properly. Please try rephrasing your question.\"}";
                 }
             }
 
             catch (Exception e) {
-                return "{\"message\": \"Error: " + e.getMessage() + "\"}";
+                return "{\"message\": \"I encountered an issue while processing your request. Please try again.\"}";
             }
         });
     }
