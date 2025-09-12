@@ -3,15 +3,25 @@ package lt.domax.paperchat.domain.ai;
 import java.util.concurrent.CompletableFuture;
 
 public abstract class Provider {
-    protected final String apiKey;
-    protected final String model;
-    protected final String systemPrompt;
+    protected String apiKey;
+    protected String model;
+    protected String systemPrompt;
+    protected int timeout;
+    protected int maxOutputTokens;
+    protected double temperature;
 
-    protected final int timeout;
-    protected final int maxOutputTokens;
-    protected final double temperature;
+    public Provider() {}
 
     public Provider(String apiKey, String model, double temperature, int timeout, int maxOutputTokens, String systemPrompt) {
+        this.apiKey = apiKey;
+        this.model = model;
+        this.temperature = temperature;
+        this.timeout = timeout;
+        this.maxOutputTokens = maxOutputTokens;
+        this.systemPrompt = systemPrompt;
+    }
+
+    public void initialize(String apiKey, String model, double temperature, int timeout, int maxOutputTokens, String systemPrompt) {
         this.apiKey = apiKey;
         this.model = model;
         this.temperature = temperature;

@@ -14,11 +14,21 @@ import java.util.concurrent.TimeUnit;
 
 @AIProvider("openai")
 public class OpenAIProvider extends Provider {
-    private final OkHttpClient client;
     private final String endpoint = "https://api.openai.com/v1/chat/completions";
+    private OkHttpClient client;
+
+    public OpenAIProvider() {
+        super();
+    }
 
     public OpenAIProvider(String apiKey, String model, double temperature, int timeout, int maxOutputTokens, String systemPrompt) {
         super(apiKey, model, temperature, timeout, maxOutputTokens, systemPrompt);
+        this.client = new OkHttpClient.Builder().connectTimeout(timeout, TimeUnit.SECONDS).readTimeout(timeout, TimeUnit.SECONDS).build();
+    }
+
+    @Override
+    public void initialize(String apiKey, String model, double temperature, int timeout, int maxOutputTokens, String systemPrompt) {
+        super.initialize(apiKey, model, temperature, timeout, maxOutputTokens, systemPrompt);
         this.client = new OkHttpClient.Builder().connectTimeout(timeout, TimeUnit.SECONDS).readTimeout(timeout, TimeUnit.SECONDS).build();
     }
 
@@ -87,7 +97,7 @@ public class OpenAIProvider extends Provider {
     }
 
     @Override
-    public boolean isAvailable() { return !apiKey.isEmpty(); }
+    public boolean isAvailable() { return !apiKey.isEmpty() && client != null; }
 
     @Override
     public void shutdown() {

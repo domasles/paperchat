@@ -3,13 +3,9 @@ package lt.domax.paperchat.domain.ai;
 import lt.domax.paperchat.domain.config.PluginConfig;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.ServiceLoader;
 import java.util.HashMap;
 import java.util.Map;
-
-import java.lang.reflect.Constructor;
-
-import java.io.File;
-import java.net.URL;
 
 public class Registry {
     private final Map<String, Provider> providers;
@@ -31,53 +27,25 @@ public class Registry {
     }
 
     private void autoRegisterProviders(PluginConfig config) {
-        try {
-            String packageName = "lt.domax.paperchat.domain.ai.providers";
-            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-            String path = packageName.replace('.', '/');
-            URL resource = classLoader.getResource(path);
+        ServiceLoader<Provider> loader = ServiceLoader.load(Provider.class, this.getClass().getClassLoader());
 
-            if (resource != null) {
-                File directory = new File(resource.getFile());
+        for (Provider provider : loader) {
+            AIProvider annotation = provider.getClass().getAnnotation(AIProvider.class);
 
-                if (directory.exists()) {
-                    for (File file : directory.listFiles()) {
-                        if (file.getName().endsWith(".class")) {
-                            String className = packageName + "." + file.getName().substring(0, file.getName().length() - 6);
+            if (annotation != null) {
+                String providerType = annotation.value();
 
-                            try {
-                                Class<?> clazz = Class.forName(className);
+                provider.initialize(
+                    config.getApiKey(),
+                    config.getModel(),
+                    config.getTemperature(),
+                    config.getTimeout(),
+                    config.getMaxOutputTokens(),
+                    config.getSystemPrompt()
+                );
 
-                                if (Provider.class.isAssignableFrom(clazz) && clazz.isAnnotationPresent(AIProvider.class)) {
-                                    AIProvider annotation = clazz.getAnnotation(AIProvider.class);
-                                    String providerName = annotation.value();
-                                    Constructor<?> constructor = clazz.getConstructor(String.class, String.class, double.class, int.class, int.class, String.class);
-
-                                    Provider provider = (Provider) constructor.newInstance(
-                                        config.getApiKey(),
-                                        config.getModel(),
-                                        config.getTemperature(),
-                                        config.getTimeout(),
-                                        config.getmaxOutputTokens(),
-                                        config.getSystemPrompt()
-                                    );
-
-                                    providers.put(providerName, provider);
-                                    System.out.println("[Registry] Auto-registered provider: " + providerName);
-                                }
-                            }
-
-                            catch (Exception e) {
-                                System.err.println("[Registry] Failed to register provider from class " + className + ": " + e.getMessage());
-                            }
-                        }
-                    }
-                }
+                providers.put(providerType.toLowerCase(), provider);
             }
-        }
-
-        catch (Exception e) {
-            System.err.println("[Registry] Auto-registration failed: " + e.getMessage());
         }
     }
 

@@ -43,7 +43,7 @@ public class PluginConfig {
 
     public int getMaxHistory() { return maxHistory; }
     public int getTimeout() { return timeout; }
-    public int getmaxOutputTokens() { return maxOutputTokens; }
+    public int getMaxOutputTokens() { return maxOutputTokens; }
 
     public double getTemperature() { return temperature; }
     public boolean isValid() { return !apiKey.isEmpty(); }

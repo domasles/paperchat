@@ -14,14 +14,24 @@ import java.util.concurrent.TimeUnit;
 
 @AIProvider("google")
 public class GoogleProvider extends Provider {
-    private final OkHttpClient client;
     private final String endpoint = "https://generativelanguage.googleapis.com";
+    private OkHttpClient client;
+
+    public GoogleProvider() {
+        super();
+    }
 
     public GoogleProvider(String apiKey, String model, double temperature, int timeout, int maxOutputTokens, String systemPrompt) {
         super(apiKey, model, temperature, timeout, maxOutputTokens, systemPrompt);
         this.client = new OkHttpClient.Builder().connectTimeout(timeout, TimeUnit.SECONDS).readTimeout(timeout, TimeUnit.SECONDS).build();
     }
-    
+
+    @Override
+    public void initialize(String apiKey, String model, double temperature, int timeout, int maxOutputTokens, String systemPrompt) {
+        super.initialize(apiKey, model, temperature, timeout, maxOutputTokens, systemPrompt);
+        this.client = new OkHttpClient.Builder().connectTimeout(timeout, TimeUnit.SECONDS).readTimeout(timeout, TimeUnit.SECONDS).build();
+    }
+
     @Override
     public CompletableFuture<String> sendMessage(String prompt) {
         return CompletableFuture.supplyAsync(() -> {
@@ -101,7 +111,7 @@ public class GoogleProvider extends Provider {
     }
 
     @Override
-    public boolean isAvailable() { return !apiKey.isEmpty(); }
+    public boolean isAvailable() { return !apiKey.isEmpty() && client != null; }
 
     @Override
     public void shutdown() {
