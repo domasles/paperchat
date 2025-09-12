@@ -36,7 +36,7 @@ public class PaperChat extends JavaPlugin {
 
         chatService = new ChatService(aiRegistry, config);
 
-        getCommand("paperchat").setExecutor(new ChatCommand(chatService));
+        getCommand("paperchat").setExecutor(new ChatCommand(chatService, config));
         getLogger().info("PaperChat enabled successfully!");
     }
 

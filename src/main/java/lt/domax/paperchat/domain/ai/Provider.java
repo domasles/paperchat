@@ -6,8 +6,10 @@ public abstract class Provider {
     protected String apiKey;
     protected String model;
     protected String systemPrompt;
+
     protected int timeout;
     protected int maxOutputTokens;
+
     protected double temperature;
 
     public Provider() {}

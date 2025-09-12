@@ -1,5 +1,6 @@
 package lt.domax.paperchat.infrastructure.commands;
 
+import lt.domax.paperchat.domain.config.PluginConfig;
 import lt.domax.paperchat.domain.chat.ChatService;
 
 import org.bukkit.command.CommandExecutor;
@@ -10,9 +11,11 @@ import org.bukkit.entity.Player;
 
 public class ChatCommand implements CommandExecutor {
     private final ChatService chatService;
+    private final PluginConfig config;
 
-    public ChatCommand(ChatService chatService) {
+    public ChatCommand(ChatService chatService, PluginConfig config) {
         this.chatService = chatService;
+        this.config = config;
     }
 
     @Override
@@ -50,6 +53,11 @@ public class ChatCommand implements CommandExecutor {
 
         if (message.trim().isEmpty()) {
             player.sendMessage("§cMessage cannot be empty.");
+            return true;
+        }
+
+        if (message.length() > config.getMaxInputCharacters()) {
+            sender.sendMessage("§cThe message exceeds the maximum length of " + config.getMaxInputCharacters() + " characters.");
             return true;
         }
 

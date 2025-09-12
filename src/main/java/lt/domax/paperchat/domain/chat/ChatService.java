@@ -1,8 +1,8 @@
 package lt.domax.paperchat.domain.chat;
 
 import lt.domax.paperchat.domain.player.PlayerChatManager;
-import lt.domax.paperchat.domain.ai.Registry;
 import lt.domax.paperchat.domain.config.PluginConfig;
+import lt.domax.paperchat.domain.ai.Registry;
 
 import org.bukkit.entity.Player;
 
