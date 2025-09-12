@@ -8,13 +8,15 @@ public abstract class Provider {
     protected final String systemPrompt;
 
     protected final int timeout;
+    protected final int maxOutputTokens;
     protected final double temperature;
 
-    public Provider(String apiKey, String model, double temperature, int timeout, String systemPrompt) {
+    public Provider(String apiKey, String model, double temperature, int timeout, int maxOutputTokens, String systemPrompt) {
         this.apiKey = apiKey;
         this.model = model;
         this.temperature = temperature;
         this.timeout = timeout;
+        this.maxOutputTokens = maxOutputTokens;
         this.systemPrompt = systemPrompt;
     }
 

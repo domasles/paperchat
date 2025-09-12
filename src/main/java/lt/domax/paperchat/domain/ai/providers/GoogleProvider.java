@@ -1,6 +1,8 @@
 package lt.domax.paperchat.domain.ai.providers;
 
+import lt.domax.paperchat.domain.ai.AIProvider;
 import lt.domax.paperchat.domain.ai.Provider;
+
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonArray;
@@ -10,12 +12,13 @@ import okhttp3.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
+@AIProvider("google")
 public class GoogleProvider extends Provider {
     private final OkHttpClient client;
     private final String endpoint = "https://generativelanguage.googleapis.com";
 
-    public GoogleProvider(String apiKey, String model, double temperature, int timeout, String systemPrompt) {
-        super(apiKey, model, temperature, timeout, systemPrompt);
+    public GoogleProvider(String apiKey, String model, double temperature, int timeout, int maxOutputTokens, String systemPrompt) {
+        super(apiKey, model, temperature, timeout, maxOutputTokens, systemPrompt);
         this.client = new OkHttpClient.Builder().connectTimeout(timeout, TimeUnit.SECONDS).readTimeout(timeout, TimeUnit.SECONDS).build();
     }
     
@@ -48,7 +51,7 @@ public class GoogleProvider extends Provider {
                 contents.add(content);
 
                 generationConfig.addProperty("temperature", temperature);
-                generationConfig.addProperty("maxOutputTokens", 4096);
+                generationConfig.addProperty("maxOutputTokens", maxOutputTokens);
 
                 requestBody.add("systemInstruction", systemInstruction);
                 requestBody.add("contents", contents);

@@ -1,12 +1,15 @@
 package lt.domax.paperchat.domain.ai;
 
-import lt.domax.paperchat.domain.ai.providers.OpenAIProvider;
-import lt.domax.paperchat.domain.ai.providers.GoogleProvider;
 import lt.domax.paperchat.domain.config.PluginConfig;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
+
+import java.lang.reflect.Constructor;
+
+import java.io.File;
+import java.net.URL;
 
 public class Registry {
     private final Map<String, Provider> providers;
@@ -17,31 +20,64 @@ public class Registry {
     }
 
     public void initialize(PluginConfig config) {
-        OpenAIProvider openaiProvider = new OpenAIProvider(
-            config.getApiKey(),
-            config.getModel(),
-            config.getTemperature(),
-            config.getTimeout(),
-            config.getSystemPrompt()
-        );
-
-        providers.put("openai", openaiProvider);
-
-        GoogleProvider googleProvider = new GoogleProvider(
-            config.getApiKey(),
-            config.getModel(),
-            config.getTemperature(),
-            config.getTimeout(),
-            config.getSystemPrompt()
-        );
-
-        providers.put("google", googleProvider);
+        autoRegisterProviders(config);
 
         String providerName = config.getProvider();
         activeProvider = providers.get(providerName);
 
-        if (activeProvider == null) {
-            activeProvider = providers.get("openai");
+        if (activeProvider == null && !providers.isEmpty()) {
+            activeProvider = providers.values().iterator().next();
+        }
+    }
+
+    private void autoRegisterProviders(PluginConfig config) {
+        try {
+            String packageName = "lt.domax.paperchat.domain.ai.providers";
+            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+            String path = packageName.replace('.', '/');
+            URL resource = classLoader.getResource(path);
+
+            if (resource != null) {
+                File directory = new File(resource.getFile());
+
+                if (directory.exists()) {
+                    for (File file : directory.listFiles()) {
+                        if (file.getName().endsWith(".class")) {
+                            String className = packageName + "." + file.getName().substring(0, file.getName().length() - 6);
+
+                            try {
+                                Class<?> clazz = Class.forName(className);
+
+                                if (Provider.class.isAssignableFrom(clazz) && clazz.isAnnotationPresent(AIProvider.class)) {
+                                    AIProvider annotation = clazz.getAnnotation(AIProvider.class);
+                                    String providerName = annotation.value();
+                                    Constructor<?> constructor = clazz.getConstructor(String.class, String.class, double.class, int.class, int.class, String.class);
+
+                                    Provider provider = (Provider) constructor.newInstance(
+                                        config.getApiKey(),
+                                        config.getModel(),
+                                        config.getTemperature(),
+                                        config.getTimeout(),
+                                        config.getmaxOutputTokens(),
+                                        config.getSystemPrompt()
+                                    );
+
+                                    providers.put(providerName, provider);
+                                    System.out.println("[Registry] Auto-registered provider: " + providerName);
+                                }
+                            }
+
+                            catch (Exception e) {
+                                System.err.println("[Registry] Failed to register provider from class " + className + ": " + e.getMessage());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        catch (Exception e) {
+            System.err.println("[Registry] Auto-registration failed: " + e.getMessage());
         }
     }
 

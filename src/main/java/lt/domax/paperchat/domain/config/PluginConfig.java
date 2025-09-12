@@ -8,6 +8,8 @@ public class PluginConfig {
 
     private final int maxHistory;
     private final int timeout;
+    private int maxOutputTokens;
+
     private final double temperature;
 
     public PluginConfig() {
@@ -17,6 +19,7 @@ public class PluginConfig {
         this.model = getEnvOrDefault("PAPERCHAT_MODEL", "gemini-2.0-flash");
         this.temperature = Double.parseDouble(getEnvOrDefault("PAPERCHAT_TEMPERATURE", "0.7"));
         this.timeout = Integer.parseInt(getEnvOrDefault("PAPERCHAT_TIMEOUT", "30"));
+        this.maxOutputTokens = Integer.parseInt(getEnvOrDefault("PAPERCHAT_MAX_OUTPUT_TOKENS", "4096"));
         this.systemPrompt = getEnvOrDefault("PAPERCHAT_SYSTEM_PROMPT",
             "You are a Minecraft assistant. Follow these rules strictly:\n" +
             "1. Respond only to Minecraft-related questions. If the user asks about unrelated topics, respond exactly: {\"message\": \"I don't understand. Ask me something about Minecraft instead!\"}\n" +
@@ -40,6 +43,7 @@ public class PluginConfig {
 
     public int getMaxHistory() { return maxHistory; }
     public int getTimeout() { return timeout; }
+    public int getmaxOutputTokens() { return maxOutputTokens; }
 
     public double getTemperature() { return temperature; }
     public boolean isValid() { return !apiKey.isEmpty(); }

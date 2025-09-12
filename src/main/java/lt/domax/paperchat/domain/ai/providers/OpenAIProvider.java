@@ -1,5 +1,6 @@
 package lt.domax.paperchat.domain.ai.providers;
 
+import lt.domax.paperchat.domain.ai.AIProvider;
 import lt.domax.paperchat.domain.ai.Provider;
 
 import com.google.gson.JsonObject;
@@ -11,12 +12,13 @@ import okhttp3.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
+@AIProvider("openai")
 public class OpenAIProvider extends Provider {
     private final OkHttpClient client;
     private final String endpoint = "https://api.openai.com/v1/chat/completions";
 
-    public OpenAIProvider(String apiKey, String model, double temperature, int timeout, String systemPrompt) {
-        super(apiKey, model, temperature, timeout, systemPrompt);
+    public OpenAIProvider(String apiKey, String model, double temperature, int timeout, int maxOutputTokens, String systemPrompt) {
+        super(apiKey, model, temperature, timeout, maxOutputTokens, systemPrompt);
         this.client = new OkHttpClient.Builder().connectTimeout(timeout, TimeUnit.SECONDS).readTimeout(timeout, TimeUnit.SECONDS).build();
     }
 
@@ -32,7 +34,7 @@ public class OpenAIProvider extends Provider {
 
                 requestBody.addProperty("model", model);
                 requestBody.addProperty("temperature", temperature);
-                requestBody.addProperty("max_tokens", 500);
+                requestBody.addProperty("max_tokens", maxOutputTokens);
 
                 systemMessage.addProperty("role", "system");
                 systemMessage.addProperty("content", systemPrompt);
