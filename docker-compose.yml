@@ -1,11 +1,19 @@
+# PaperChat Server Docker Compose Configuration
+# This configuration uses a pre-built image from GitHub Container Registry (GHCR)
+# To use local builds instead, use docker compose up --build
+
 services:
   paperchat-server:
-    image: paperchat-server
+    build:
+        context: ./
+        dockerfile: Dockerfile
+
+    image: ghcr.io/domasles/paperchat/server:latest
     container_name: paperchat-server
     restart: unless-stopped
 
     ports:
-      - "25565:25565"
+      - "0.0.0.0:25565:25565"
 
     environment:
       # We suggest you not tweak EULA and TYPE environment variables. They are baked in the image and modifying them may cause issues

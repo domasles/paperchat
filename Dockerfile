@@ -9,7 +9,7 @@ COPY . .
 
 # Configure and run builder
 RUN gradle wrapper --gradle-version 9.0
-RUN gradle build
+RUN ./gradlew build
 
 # Production stage with Minecraft server
 FROM itzg/minecraft-server:java21
