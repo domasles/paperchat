@@ -12,3 +12,16 @@ gradle*
 
 # Environment variables
 .env
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+README.md
+LICENSE
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore

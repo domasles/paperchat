@@ -1,6 +1,6 @@
 services:
   mc-server1:
-    image: itzg/minecraft-server:java21
+    image: paperchat-server
     container_name: mc-server
     restart: unless-stopped
 
@@ -8,8 +8,6 @@ services:
       - "25565:25565"
 
     environment:
-      EULA: "TRUE"
-      TYPE: PAPER
       VERSION: "1.21.1"
       MEMORY: 5G
       ONLINE_MODE: "FALSE"
@@ -23,9 +21,6 @@ services:
       PAPERCHAT_TEMPERATURE: ${PAPERCHAT_TEMPERATURE}
       PAPERCHAT_TIMEOUT: ${PAPERCHAT_TIMEOUT}
       PAPERCHAT_SYSTEM_PROMPT: ${PAPERCHAT_SYSTEM_PROMPT}
-
-    volumes:
-      - ./build/libs:/data/plugins
 
     stdin_open: true
     tty: true
