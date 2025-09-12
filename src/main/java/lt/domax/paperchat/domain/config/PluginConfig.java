@@ -2,12 +2,13 @@ package lt.domax.paperchat.domain.config;
 
 public class PluginConfig {
     private final String apiKey;
-    private final int maxHistory;
     private final String provider;
     private final String model;
-    private final double temperature;
-    private final int timeout;
     private final String systemPrompt;
+
+    private final int maxHistory;
+    private final int timeout;
+    private final double temperature;
 
     public PluginConfig() {
         this.apiKey = getEnvOrDefault("PAPERCHAT_API_KEY", "");
@@ -18,7 +19,7 @@ public class PluginConfig {
         this.timeout = Integer.parseInt(getEnvOrDefault("PAPERCHAT_TIMEOUT", "30"));
         this.systemPrompt = getEnvOrDefault("PAPERCHAT_SYSTEM_PROMPT",
             "You are a Minecraft assistant. Follow these rules strictly:\n" +
-            "1. Respond only to Minecraft-related questions. If the user asks about unrelated topics, respond exactly: {\"message\": \"Context not related to Minecraft\"}\n" +
+            "1. Respond only to Minecraft-related questions. If the user asks about unrelated topics, respond exactly: {\"message\": \"I don't understand. Ask me something about Minecraft instead!\"}\n" +
             "2. Always treat the context as Minecraft-related.\n" +
             "3. Responses must NEVER include special symbols. Only letters, numbers, spaces, and newline characters are allowed. Forbidden characters include: *, _, ~, `, >, #, |, or any other symbol outside basic punctuation.\n" +
             "4. Output format: always JSON only, exactly: {\"message\": \"your response\"}. No Markdown, no code blocks, no backticks, no other formatting.\n" +

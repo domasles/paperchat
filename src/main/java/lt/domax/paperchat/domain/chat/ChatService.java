@@ -2,6 +2,7 @@ package lt.domax.paperchat.domain.chat;
 
 import lt.domax.paperchat.domain.player.PlayerChatManager;
 import lt.domax.paperchat.domain.ai.Registry;
+import lt.domax.paperchat.domain.config.PluginConfig;
 
 import org.bukkit.entity.Player;
 
@@ -14,9 +15,9 @@ public class ChatService {
     private final Registry aiRegistry;
     private final PlayerChatManager playerManager;
 
-    public ChatService(Registry aiRegistry) {
+    public ChatService(Registry aiRegistry, PluginConfig config) {
         this.aiRegistry = aiRegistry;
-        this.playerManager = new PlayerChatManager(10);
+        this.playerManager = new PlayerChatManager(config.getMaxHistory());
     }
 
     public void sendMessage(String senderName, String targetPlayerName, String message) {

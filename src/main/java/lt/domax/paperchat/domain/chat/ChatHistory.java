@@ -6,6 +6,7 @@ public class ChatHistory {
     private String sender;
     private String message;
     private String response;
+
     private LocalDateTime timestamp;
 
     public ChatHistory(String sender, String message, String response) {
@@ -18,8 +19,7 @@ public class ChatHistory {
     public String getSender() { return sender; }
     public String getMessage() { return message; }
     public String getResponse() { return response; }
+    public String toHistoryString() { return "User (" + sender + "): " + message + "\nAI: " + response; }
 
     public LocalDateTime getTimestamp() { return timestamp; }
-
-    public String toHistoryString() { return "User (" + sender + "): " + message + "\nAI: " + response; }
 }

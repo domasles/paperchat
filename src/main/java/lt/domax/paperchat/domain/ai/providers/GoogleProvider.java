@@ -4,6 +4,7 @@ import lt.domax.paperchat.domain.ai.Provider;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonArray;
+
 import okhttp3.*;
 
 import java.util.concurrent.CompletableFuture;
@@ -27,6 +28,10 @@ public class GoogleProvider extends Provider {
                 JsonArray contents = new JsonArray();
                 JsonObject content = new JsonObject();
 
+                JsonArray systemParts = new JsonArray();
+                JsonObject systemPart = new JsonObject();
+                JsonObject systemInstruction = new JsonObject();
+
                 JsonArray parts = new JsonArray();
                 JsonObject part = new JsonObject();
 
@@ -35,12 +40,17 @@ public class GoogleProvider extends Provider {
                 part.addProperty("text", prompt);
                 parts.add(part);
 
+                systemPart.addProperty("text", systemPrompt);
+                systemParts.add(systemPart);
+                systemInstruction.add("parts", systemParts);
+
                 content.add("parts", parts);
                 contents.add(content);
 
                 generationConfig.addProperty("temperature", temperature);
-                generationConfig.addProperty("maxOutputTokens", 500);
+                generationConfig.addProperty("maxOutputTokens", 4096);
 
+                requestBody.add("systemInstruction", systemInstruction);
                 requestBody.add("contents", contents);
                 requestBody.add("generationConfig", generationConfig);
 

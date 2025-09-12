@@ -24,19 +24,25 @@ public class OpenAIProvider extends Provider {
     public CompletableFuture<String> sendMessage(String prompt) {
         return CompletableFuture.supplyAsync(() -> {
             try {
+                JsonObject requestBody = new JsonObject();
                 JsonArray messages = new JsonArray();
 
+                JsonObject systemMessage = new JsonObject();
                 JsonObject userMessage = new JsonObject();
-                JsonObject requestBody = new JsonObject();
 
                 requestBody.addProperty("model", model);
                 requestBody.addProperty("temperature", temperature);
                 requestBody.addProperty("max_tokens", 500);
 
+                systemMessage.addProperty("role", "system");
+                systemMessage.addProperty("content", systemPrompt);
+
                 userMessage.addProperty("role", "user");
                 userMessage.addProperty("content", prompt);
 
+                messages.add(systemMessage);
                 messages.add(userMessage);
+
                 requestBody.add("messages", messages);
 
                 RequestBody body = RequestBody.create(

@@ -20,7 +20,13 @@ services:
       PAPERCHAT_MODEL: ${PAPERCHAT_MODEL}
       PAPERCHAT_TEMPERATURE: ${PAPERCHAT_TEMPERATURE}
       PAPERCHAT_TIMEOUT: ${PAPERCHAT_TIMEOUT}
-      PAPERCHAT_SYSTEM_PROMPT: ${PAPERCHAT_SYSTEM_PROMPT}
+
+      # Uncomment the following line to specify a custom system prompt
+      # PAPERCHAT_SYSTEM_PROMPT: ${PAPERCHAT_SYSTEM_PROMPT}
+
+    # Uncomment the following lines to mount the built plugin jar from the host machine
+    # volumes:
+    #   - ./build/libs:/data/plugins
 
     stdin_open: true
     tty: true
