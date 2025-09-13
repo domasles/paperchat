@@ -9,7 +9,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}/server
 
 jobs:
-  build-paperchat:
+  build-server:
     runs-on: ubuntu-latest
 
     permissions:
