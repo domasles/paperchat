@@ -1,3 +1,5 @@
+![PaperChat Logo](./PaperChatLogo.png)
+
 # PaperChat - AI-Powered Minecraft Plugin
 
 PaperChat is a Minecraft server plugin that integrates AI language models directly into player communication. It allows players to send messages to each other through AI assistants, answering questions and creating natural conversation experiences powered by Google Gemini and OpenAI models, with the ability to add your own!
