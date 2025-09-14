@@ -1,0 +1,17 @@
+# AI Configuration
+ai:
+  api-key: ""  # You can leave it empty if your provider does NOT require an API key
+  provider: "google"
+  model: "gemini-2.5-flash"
+  temperature: 0.7
+  timeout: 30
+  max-output-tokens: 4096
+  system-prompt: ""  # Include your custom system prompt here
+
+# NOTE: setting a system prompt here will overwrite the current prompt
+# If left empty, the default system prompt will be used
+
+# Chat Configuration  
+chat:
+  max-history: 5
+  max-input-characters: 100

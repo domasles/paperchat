@@ -15,9 +15,9 @@ public class ChatService {
     private final Registry aiRegistry;
     private final PlayerChatManager playerManager;
 
-    public ChatService(Registry aiRegistry, PluginConfig config) {
+    public ChatService(Registry aiRegistry, PluginConfig config, PlayerChatManager chatManager) {
         this.aiRegistry = aiRegistry;
-        this.playerManager = new PlayerChatManager(config.getMaxHistory());
+        this.playerManager = chatManager;
     }
 
     public void sendMessage(String senderName, String targetPlayerName, String message) {

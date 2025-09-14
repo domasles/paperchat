@@ -20,8 +20,7 @@ public class PlayerChatManager {
     }
 
     public ChatSession getOrCreateSession(String playerName) {
-        return sessions.computeIfAbsent(playerName, 
-            name -> new ChatSession(name, maxHistory));
+        return sessions.computeIfAbsent(playerName, name -> new ChatSession(name, maxHistory));
     }
 
     public ChatSession getSession(String playerName) { return sessions.get(playerName); }

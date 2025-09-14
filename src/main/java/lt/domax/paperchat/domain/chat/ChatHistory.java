@@ -13,6 +13,7 @@ public class ChatHistory {
         this.sender = sender;
         this.message = message;
         this.response = response;
+
         this.timestamp = LocalDateTime.now();
     }
 

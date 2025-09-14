@@ -74,7 +74,7 @@ public class OpenAIProvider extends Provider {
                         JsonObject choice = jsonResponse.getAsJsonArray("choices").get(0).getAsJsonObject();
                         JsonObject message = choice.getAsJsonObject("message");
 
-                        String aiResponse = message.get("content").getAsString().trim();
+                        String aiResponse = message.get("content").getAsString().replaceAll("(?s)<think>.*?</think>", "").trim();
 
                         try {
                             JsonParser.parseString(aiResponse);
