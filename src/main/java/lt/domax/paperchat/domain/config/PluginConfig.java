@@ -51,5 +51,4 @@ public class PluginConfig {
     public int getMaxOutputTokens() { return maxOutputTokens; }
 
     public double getTemperature() { return temperature; }
-    public boolean isValid() { return !apiKey.isEmpty(); }
 }

@@ -17,13 +17,6 @@ public class PaperChat extends JavaPlugin {
         getLogger().info("PaperChat starting up...");
         config = new PluginConfig();
 
-        if (!config.isValid()) {
-            getLogger().severe("Invalid configuration! Please set PAPERCHAT_API_KEY environment variable.");
-            getServer().getPluginManager().disablePlugin(this);
-
-            return;
-        }
-
         aiRegistry = new Registry();
         aiRegistry.initialize(config);
 
