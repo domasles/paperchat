@@ -42,7 +42,7 @@ cd paperchat
 # Create environment file
 cp .env.example .env
 ```
-**NOTE**: Edit the `.env` file to set your `PAPERCHAT_API_KEY` (required) and other optional settings.
+**NOTE**: Edit the `.env` file to set your desired settings.
 
 3. **Start with Docker Compose**:
 ```bash
@@ -76,37 +76,38 @@ cp build/libs/paperchat-*.jar /path/to/your/minecraft/server/plugins/
 3. **Configure environment variables**:
 ```bash
 export PAPERCHAT_API_KEY="your-api-key-here"
-export PAPERCHAT_PROVIDER="google"  # or "openai"
-export PAPERCHAT_MODEL="gemini-2.5-flash"  # or "gpt-5"
+export PAPERCHAT_PROVIDER="google"
+export PAPERCHAT_MODEL="gemini-2.5-flash"
 ```
 
 4. **Start your Minecraft server**
+
+## Available Providers
+
+- [**Google's**](https://cloud.google.com/ai) Models
+- [**OpenAI**](https://openai.com/) Models
+- [**Hack Club's**](https://ai.hackclub.com/) Models
 
 ## Configuration
 
 PaperChat is configured entirely through environment variables:
 
-### Required Configuration
 
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `PAPERCHAT_API_KEY` | Your AI provider API key | `your-google-api-key` |
-
-### Optional Configuration
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `PAPERCHAT_MAX_HISTORY` | `5` | Conversation history limit |
-| `PAPERCHAT_PROVIDER` | `google` | AI provider (`google` or `openai`) |
-| `PAPERCHAT_MODEL` | `gemini-2.5-flash` | Model to use |
-| `PAPERCHAT_TEMPERATURE` | `0.7` | Response creativity (0.0-1.0) |
-| `PAPERCHAT_TIMEOUT` | `30` | Request timeout in seconds |
-| `PAPERCHAT_MAX_INPUT_CHARACTERS` | `100` | Maximum input message length |
-| `PAPERCHAT_MAX_OUTPUT_TOKENS` | `4096` | Maximum response length |
+| Variable | Description | Value |
+|----------|-------------|-------|
+| `PAPERCHAT_API_KEY` | Your AI provider API key | `your-api-key` (required only by your provider. If an AI provider does not require an API key, you can leave this blank) |
+| `PAPERCHAT_MAX_HISTORY` | Max number of past requests to be saved per player | Conversation history limit |
+| `PAPERCHAT_PROVIDER` | One of the available AI providers | AI provider (see more at [**Available Providers**](#available-providers)) |
+| `PAPERCHAT_MODEL` | Any LLM that a provider provides | Model to use |
+| `PAPERCHAT_TEMPERATURE` | Response creativity (0.0-1.0) | 0.7 |
+| `PAPERCHAT_TIMEOUT` | Request timeout in seconds | 30 |
+| `PAPERCHAT_MAX_INPUT_CHARACTERS` | Maximum input message length | 100 |
+| `PAPERCHAT_MAX_OUTPUT_TOKENS` | Maximum response length | 4096 |
+| `PAPERCHAT_SYSTEM_PROMPT` | Custom system prompt for AI behavior | Your custom prompt (leaving empty uses default system prompt) |
 
 ### System Prompt Configuration
 
-The default system prompt enforces Minecraft-focused responses with strict JSON formatting. You can customize it:
+The default system prompt sets the context to Minecraft with strict JSON formatting. You can customize it:
 
 ```bash
 export PAPERCHAT_SYSTEM_PROMPT="Your custom AI behavior instructions here"
@@ -186,14 +187,23 @@ src/main/resources/META-INF/services/lt.domax.paperchat.domain.ai.Provider
 1. Visit [Google AI Studio](https://ai.google.dev/)
 2. Create a new API key
 3. Set `PAPERCHAT_API_KEY` to your key
-4. Set `PAPERCHAT_PROVIDER=google`
+4. Set `PAPERCHAT_PROVIDER` to `google`
+5. Set `PAPERCHAT_MODEL` to your desired Gemini model (e.g., `gemini-2.5-flash`)
 
 ### OpenAI
 
 1. Visit [OpenAI API](https://platform.openai.com/api-keys)
 2. Create a new API key
-3. Set `PAPERCHAT_API_KEY` to your key  
-4. Set `PAPERCHAT_PROVIDER=openai`
+3. Set `PAPERCHAT_API_KEY` to your key
+4. Set `PAPERCHAT_PROVIDER` to `openai`
+5. Set `PAPERCHAT_MODEL` to your desired OpenAI model (e.g., `gpt-5`)
+
+### Hack Club's OpenAI
+
+1. Visit [Hack Club's AI](https://ai.hackclub.com/)
+2. Set `PAPERCHAT_API_KEY` to be empty
+3. Set `PAPERCHAT_PROVIDER` to `hackclub/openai`
+4. Set `PAPERCHAT_MODEL` to your desired Hack Club model (e.g., `openai/gpt-oss-20b`)
 
 ## Troubleshooting
 

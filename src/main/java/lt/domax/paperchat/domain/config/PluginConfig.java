@@ -36,7 +36,7 @@ public class PluginConfig {
 
     private String getEnvOrDefault(String key, String defaultValue) {
         String value = System.getenv(key);
-        return value != null ? value : defaultValue;
+        return (value != null && !value.isEmpty()) ? value : defaultValue;
     }
 
     public String getApiKey() { return apiKey; }
