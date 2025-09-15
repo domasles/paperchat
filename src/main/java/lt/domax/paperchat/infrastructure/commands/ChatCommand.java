@@ -32,7 +32,7 @@ public class ChatCommand implements CommandExecutor {
             return true;
         }
 
-        if (args.length < 2) {
+        if (args.length <= 1) {
             if (args.length == 1 && args[0].equalsIgnoreCase("history")) {
                 chatService.showHistory(player.getName());
                 return true;
@@ -43,19 +43,20 @@ public class ChatCommand implements CommandExecutor {
                 return true;
             }
             
-            player.sendMessage("§cUsage: /paperchat <player> <message>");
-            player.sendMessage("§cOr: /paperchat history");
-            player.sendMessage("§cOr: /paperchat clear");
+            player.sendMessage("§cUsage: /paperchat <option>");
+            player.sendMessage("§cAvailable options:");
+            player.sendMessage("§c - /paperchat <your desired question>");
+            player.sendMessage("§c - /paperchat history");
+            player.sendMessage("§c - /paperchat clear");
 
             return true;
         }
 
-        String targetPlayer = args[0];
         StringBuilder messageBuilder = new StringBuilder();
 
-        for (int i = 1; i < args.length; i++) {
-            if (i > 1) messageBuilder.append(" ");
+        for (int i = 0; i < args.length; i++) {
             messageBuilder.append(args[i]);
+            if (i < args.length - 1) messageBuilder.append(" ");
         }
 
         String message = messageBuilder.toString();
@@ -74,7 +75,7 @@ public class ChatCommand implements CommandExecutor {
             return true;
         }
 
-        chatService.sendMessage(player.getName(), targetPlayer, message);
+        chatService.sendMessage(player.getName(), player.getName(), message);
         return true;
     }
 }

@@ -137,11 +137,17 @@ export PAPERCHAT_SYSTEM_PROMPT="Your custom AI behavior instructions here"
 
 ### Basic Commands
 
-Send a message to another player through AI:
+Send a message to AI:
 ```
-/paperchat <target_player> <your_message>
-/paperchat Steve "How do I build a redstone clock?"
-/paperchat Alex What's the best way to mine diamonds?
+/paperchat <option>
+```
+
+Available options:
+
+```
+ - /paperchat <your desired question> : Ask a question to the AI
+ - /paperchat history : View your conversation history
+ - /paperchat clear : Clear your conversation history
 ```
 
 ### Permissions
@@ -150,9 +156,9 @@ Send a message to another player through AI:
 
 ### Response Flow
 
-1. Player sends command with target and message
+1. Player sends command with target message
 2. AI processes the message with conversation history context
-3. Response is formatted and sent to the target player
+3. Response is formatted and sent to the sender
 4. Both the original message and AI response are stored in conversation history
 
 ## Architecture

@@ -4,11 +4,10 @@ import lt.domax.paperchat.domain.player.PlayerChatManager;
 import lt.domax.paperchat.domain.config.PluginConfig;
 import lt.domax.paperchat.domain.ai.Registry;
 
-import org.bukkit.entity.Player;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import org.bukkit.entity.Player;
 import org.bukkit.Bukkit;
 
 public class ChatService {
