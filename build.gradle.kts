@@ -17,6 +17,7 @@ dependencies {
 
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.mikesamuel:json-sanitizer:1.2.3")
 }
 
 java {
@@ -36,6 +37,7 @@ tasks.shadowJar {
 
     relocate("okhttp3", "lt.domax.paperchat.libs.okhttp3")
     relocate("com.google.gson", "lt.domax.paperchat.libs.gson")
+    relocate("com.mikesamuel", "lt.domax.paperchat.libs.mikesamuel")
 
     minimize()
 }

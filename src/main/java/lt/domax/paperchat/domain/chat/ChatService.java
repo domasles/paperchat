@@ -4,6 +4,7 @@ import lt.domax.paperchat.domain.player.PlayerChatManager;
 import lt.domax.paperchat.domain.config.PluginConfig;
 import lt.domax.paperchat.domain.ai.Registry;
 
+import com.google.json.JsonSanitizer;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -38,15 +39,16 @@ public class ChatService {
         String prompt = session.hasHistory() ? aiRegistry.getActiveProvider().formatPrompt(message, conversationHistory) : message;
 
         aiRegistry.sendMessage(prompt).thenAccept(response -> {
+                String sanitizedResponse = JsonSanitizer.sanitize(response);
                 String actualMessage;
 
                 try {
-                    JsonObject jsonResponse = JsonParser.parseString(response).getAsJsonObject();
+                    JsonObject jsonResponse = JsonParser.parseString(sanitizedResponse).getAsJsonObject();
                     actualMessage = jsonResponse.get("message").getAsString();
                 }
 
                 catch (Exception e) {
-                    actualMessage = extractMessageFromResponse(response);
+                    actualMessage = extractMessageFromResponse(sanitizedResponse);
                 }
 
                 session.addMessage(senderName, message, actualMessage);

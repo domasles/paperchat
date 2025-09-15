@@ -35,8 +35,8 @@ public class PaperChat extends JavaPlugin {
         }
 
         chatManager = new PlayerChatManager(config.getMaxHistory());
-        chatCommand = new ChatCommand(chatService, config);
         chatService = new ChatService(aiRegistry, config, chatManager);
+        chatCommand = new ChatCommand(chatService, config);
 
         getCommand("paperchat").setExecutor(chatCommand);
         getCommand("paperchat").setTabCompleter(chatCommand);
