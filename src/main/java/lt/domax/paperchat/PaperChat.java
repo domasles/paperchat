@@ -11,7 +11,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class PaperChat extends JavaPlugin {
     private PlayerChatManager chatManager;
+    private ChatCommand chatCommand;
     private ChatService chatService;
+
     private PluginConfig config;
     private Registry aiRegistry;
 
@@ -33,9 +35,12 @@ public class PaperChat extends JavaPlugin {
         }
 
         chatManager = new PlayerChatManager(config.getMaxHistory());
+        chatCommand = new ChatCommand(chatService, config);
         chatService = new ChatService(aiRegistry, config, chatManager);
 
-        getCommand("paperchat").setExecutor(new ChatCommand(chatService, config));
+        getCommand("paperchat").setExecutor(chatCommand);
+        getCommand("paperchat").setTabCompleter(chatCommand);
+
         getLogger().info("PaperChat enabled successfully!");
     }
 

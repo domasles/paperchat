@@ -21,15 +21,15 @@ public class PluginConfig {
     public PluginConfig(PaperChat plugin) {
         this.plugin = plugin;
 
-        this.apiKey = plugin.getConfigValue("ai.api_key", "PAPERCHAT_API_KEY", "");
-        this.maxHistory = Integer.parseInt(plugin.getConfigValue("chat.max_history", "PAPERCHAT_MAX_HISTORY", "10"));
+        this.apiKey = plugin.getConfigValue("ai.api-key", "PAPERCHAT_API_KEY", "");
+        this.maxHistory = Integer.parseInt(plugin.getConfigValue("chat.max-history", "PAPERCHAT_MAX_HISTORY", "10"));
         this.provider = plugin.getConfigValue("ai.provider", "PAPERCHAT_PROVIDER", "google");
         this.model = plugin.getConfigValue("ai.model", "PAPERCHAT_MODEL", "gemini-2.0-flash");
         this.temperature = Double.parseDouble(plugin.getConfigValue("ai.temperature", "PAPERCHAT_TEMPERATURE", "0.7"));
         this.timeout = Integer.parseInt(plugin.getConfigValue("ai.timeout", "PAPERCHAT_TIMEOUT", "30"));
-        this.maxInputCharacters = Integer.parseInt(plugin.getConfigValue("chat.max_input_characters", "PAPERCHAT_MAX_INPUT_CHARACTERS", "100"));
-        this.maxOutputTokens = Integer.parseInt(plugin.getConfigValue("ai.max_output_tokens", "PAPERCHAT_MAX_OUTPUT_TOKENS", "4096"));
-        this.systemPrompt = plugin.getConfigValue("ai.system_prompt", "PAPERCHAT_SYSTEM_PROMPT",
+        this.maxInputCharacters = Integer.parseInt(plugin.getConfigValue("chat.max-input-characters", "PAPERCHAT_MAX_INPUT_CHARACTERS", "100"));
+        this.maxOutputTokens = Integer.parseInt(plugin.getConfigValue("ai.max-output-tokens", "PAPERCHAT_MAX_OUTPUT_TOKENS", "4096"));
+        this.systemPrompt = plugin.getConfigValue("ai.system-prompt", "PAPERCHAT_SYSTEM_PROMPT",
             "You are a very helpful Minecraft assistant. Follow these rules strictly:\n" +
             "1. Always treat the context as Minecraft-related.\n" +
             "2. If the user asks about topics you can't map to Minecraft, answer those as well in their own context. This is a fallback.\n" +

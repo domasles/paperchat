@@ -5,11 +5,12 @@ import lt.domax.paperchat.domain.chat.ChatService;
 
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.command.Command;
 
 import org.bukkit.entity.Player;
 
-public class ChatCommand implements CommandExecutor {
+public class ChatCommand implements CommandExecutor, TabCompleter {
     private final ChatService chatService;
     private final PluginConfig config;
 
@@ -32,23 +33,23 @@ public class ChatCommand implements CommandExecutor {
             return true;
         }
 
-        if (args.length <= 1) {
-            if (args.length == 1 && args[0].equalsIgnoreCase("history")) {
-                chatService.showHistory(player.getName());
-                return true;
-            }
-            
-            if (args.length == 1 && args[0].equalsIgnoreCase("clear")) {
-                chatService.clearHistory(player.getName());
-                return true;
-            }
-            
+        if (args.length < 1) {            
             player.sendMessage("§cUsage: /paperchat <option>");
             player.sendMessage("§cAvailable options:");
             player.sendMessage("§c - /paperchat <your desired question>");
             player.sendMessage("§c - /paperchat history");
             player.sendMessage("§c - /paperchat clear");
 
+            return true;
+        }
+
+        if (args.length == 1 && args[0].equalsIgnoreCase("history")) {
+                chatService.showHistory(player.getName());
+                return true;
+        }
+        
+        if (args.length == 1 && args[0].equalsIgnoreCase("clear")) {
+            chatService.clearHistory(player.getName());
             return true;
         }
 
@@ -77,5 +78,17 @@ public class ChatCommand implements CommandExecutor {
 
         chatService.sendMessage(player.getName(), player.getName(), message);
         return true;
+    }
+
+    @Override
+    public java.util.List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        java.util.List<String> completions = new java.util.ArrayList<>();
+
+        if (args.length == 1) {
+            if ("history".startsWith(args[0].toLowerCase())) completions.add("history");
+            if ("clear".startsWith(args[0].toLowerCase())) completions.add("clear");
+        }
+
+        return completions;
     }
 }

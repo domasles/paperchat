@@ -8,7 +8,7 @@ description: Play Minecraft and have an LLM baked right in!
 commands:
   paperchat:
     description: Chat with an AI chatbot
-    usage: /paperchat <player> <message>
+    usage: /paperchat <question|history|clear>
     permission: paperchat.use
 
 permissions:
