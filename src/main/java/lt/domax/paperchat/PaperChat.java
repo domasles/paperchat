@@ -44,12 +44,12 @@ public class PaperChat extends JavaPlugin {
         getLogger().info("PaperChat enabled successfully!");
     }
 
-    public String getConfigValue(String ymlKey, String envKey, String defaultValue) {
-        String ymlValue = getConfig().getString(ymlKey);
-        if (ymlValue != null && !ymlValue.isEmpty()) return ymlValue;
-
+    public String getConfigValue(String envKey, String ymlKey, String defaultValue) {
         String envValue = System.getenv(envKey);
         if (envValue != null && !envValue.isEmpty()) return envValue;
+
+        String ymlValue = getConfig().getString(ymlKey);
+        if (ymlValue != null && !ymlValue.isEmpty()) return ymlValue;
 
         return defaultValue;
     }

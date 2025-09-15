@@ -21,15 +21,15 @@ public class PluginConfig {
     public PluginConfig(PaperChat plugin) {
         this.plugin = plugin;
 
-        this.apiKey = plugin.getConfigValue("ai.api-key", "PAPERCHAT_API_KEY", "");
-        this.maxHistory = Integer.parseInt(plugin.getConfigValue("chat.max-history", "PAPERCHAT_MAX_HISTORY", "5"));
-        this.provider = plugin.getConfigValue("ai.provider", "PAPERCHAT_PROVIDER", "google");
-        this.model = plugin.getConfigValue("ai.model", "PAPERCHAT_MODEL", "");
-        this.temperature = Double.parseDouble(plugin.getConfigValue("ai.temperature", "PAPERCHAT_TEMPERATURE", "0.7"));
-        this.timeout = Integer.parseInt(plugin.getConfigValue("ai.timeout", "PAPERCHAT_TIMEOUT", "30"));
-        this.maxInputCharacters = Integer.parseInt(plugin.getConfigValue("chat.max-input-characters", "PAPERCHAT_MAX_INPUT_CHARACTERS", "100"));
-        this.maxOutputTokens = Integer.parseInt(plugin.getConfigValue("ai.max-output-tokens", "PAPERCHAT_MAX_OUTPUT_TOKENS", "4096"));
-        this.systemPrompt = plugin.getConfigValue("ai.system-prompt", "PAPERCHAT_SYSTEM_PROMPT",
+        this.apiKey = plugin.getConfigValue("PAPERCHAT_API_KEY", "ai.api-key", "");
+        this.maxHistory = Integer.parseInt(plugin.getConfigValue("PAPERCHAT_MAX_HISTORY", "chat.max-history", "5"));
+        this.provider = plugin.getConfigValue("PAPERCHAT_PROVIDER", "ai.provider", "google");
+        this.model = plugin.getConfigValue("PAPERCHAT_MODEL", "ai.model", "");
+        this.temperature = Double.parseDouble(plugin.getConfigValue("PAPERCHAT_TEMPERATURE", "ai.temperature", "0.7"));
+        this.timeout = Integer.parseInt(plugin.getConfigValue("PAPERCHAT_TIMEOUT", "ai.timeout", "30"));
+        this.maxInputCharacters = Integer.parseInt(plugin.getConfigValue("PAPERCHAT_MAX_INPUT_CHARACTERS", "chat.max-input-characters", "100"));
+        this.maxOutputTokens = Integer.parseInt(plugin.getConfigValue("PAPERCHAT_MAX_OUTPUT_TOKENS", "ai.max-output-tokens", "4096"));
+        this.systemPrompt = plugin.getConfigValue("PAPERCHAT_SYSTEM_PROMPT", "ai.system-prompt",
             "You are a very helpful Minecraft assistant. Follow these rules strictly:\n" +
             "1. You are a Minecraft assistant. So you must be playful and creative in your responses.\n" +
             "2. If a user asks who you are, you must tell them you are a Minecraft assistant without disclosing any AI or non-human nature.\n" +

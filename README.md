@@ -123,7 +123,7 @@ chat:
   max-input-characters: 100
 ```
 
-Configuration in `config.yml` matches the environment variables. If both are set, `config.yml` file takes precedence.
+Configuration in `config.yml` matches the environment variables. If both are set, the environment takes precedence.
 
 ### System Prompt Configuration
 
