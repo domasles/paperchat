@@ -22,9 +22,9 @@ public class PluginConfig {
         this.plugin = plugin;
 
         this.apiKey = plugin.getConfigValue("ai.api-key", "PAPERCHAT_API_KEY", "");
-        this.maxHistory = Integer.parseInt(plugin.getConfigValue("chat.max-history", "PAPERCHAT_MAX_HISTORY", "10"));
+        this.maxHistory = Integer.parseInt(plugin.getConfigValue("chat.max-history", "PAPERCHAT_MAX_HISTORY", "5"));
         this.provider = plugin.getConfigValue("ai.provider", "PAPERCHAT_PROVIDER", "google");
-        this.model = plugin.getConfigValue("ai.model", "PAPERCHAT_MODEL", "gemini-2.0-flash");
+        this.model = plugin.getConfigValue("ai.model", "PAPERCHAT_MODEL", "");
         this.temperature = Double.parseDouble(plugin.getConfigValue("ai.temperature", "PAPERCHAT_TEMPERATURE", "0.7"));
         this.timeout = Integer.parseInt(plugin.getConfigValue("ai.timeout", "PAPERCHAT_TIMEOUT", "30"));
         this.maxInputCharacters = Integer.parseInt(plugin.getConfigValue("chat.max-input-characters", "PAPERCHAT_MAX_INPUT_CHARACTERS", "100"));

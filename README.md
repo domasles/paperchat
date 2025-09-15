@@ -84,7 +84,7 @@ export PAPERCHAT_MODEL="gemini-2.5-flash"
 
 - [**Google's**](https://cloud.google.com/ai) Models
 - [**OpenAI**](https://openai.com/) Models
-- [**Hack Club's**](https://ai.hackclub.com/) Models
+- [**Hack Club**](https://ai.hackclub.com/) (no API key required, handles multiple models internally)
 
 ## Configuration
 
@@ -95,7 +95,7 @@ PaperChat is configured through either environment variables:
 | `PAPERCHAT_API_KEY` | Your AI provider API key | `your-api-key` (required only by your provider. If an AI provider does not require an API key, you can leave this blank) |
 | `PAPERCHAT_MAX_HISTORY` | Max number of past requests to be saved per player | Conversation history limit |
 | `PAPERCHAT_PROVIDER` | One of the available AI providers | AI provider (see more at [**Available Providers**](#available-providers)) |
-| `PAPERCHAT_MODEL` | Any LLM that a provider provides | Model to use |
+| `PAPERCHAT_MODEL` | Any LLM that a provider provides | Model to use (required only by your provider. If an AI provider does not require a model to be set, you can leave this blank) |
 | `PAPERCHAT_TEMPERATURE` | Response creativity (0.0-1.0) | 0.7 |
 | `PAPERCHAT_TIMEOUT` | Request timeout in seconds | 30 |
 | `PAPERCHAT_MAX_INPUT_CHARACTERS` | Maximum input message length | 100 |
@@ -108,7 +108,7 @@ Or `config.yml` file located in the `data/plugins/PaperChat/` directory:
 ai:
   api-key: ""  # You can leave it empty if your provider does NOT require an API key
   provider: "google"
-  model: "gemini-2.5-flash"
+  model: "gemini-2.5-flash"  # You can leave it empty if your provider does NOT require a model parameter. However, at the moment this is only true for HackClub provider
   temperature: 0.7
   timeout: 30
   max-output-tokens: 4096
@@ -227,9 +227,8 @@ src/main/resources/META-INF/services/lt.domax.paperchat.domain.ai.Provider
 ### Hack Club's OpenAI
 
 1. Visit [Hack Club's AI](https://ai.hackclub.com/)
-2. Set `PAPERCHAT_API_KEY` to be empty
-3. Set `PAPERCHAT_PROVIDER` to `hackclub/openai`
-4. Set `PAPERCHAT_MODEL` to your desired Hack Club model (e.g., `openai/gpt-oss-20b`)
+2. Set `PAPERCHAT_API_KEY` to be empty (any other value will simply be ignored)
+3. Set `PAPERCHAT_PROVIDER` to `hackclub`
 
 ## Troubleshooting
 
@@ -237,7 +236,7 @@ src/main/resources/META-INF/services/lt.domax.paperchat.domain.ai.Provider
 
 **Plugin fails to load or compile**:
 - Check Java version (requires 21+)
-- Verify API key is set correctly
+- Verify API key and/or model is set correctly
 - Check server logs for detailed error messages
 
 **AI responses not working**:

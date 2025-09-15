@@ -2,7 +2,7 @@
 ai:
   api-key: ""  # You can leave it empty if your provider does NOT require an API key
   provider: "google"
-  model: "gemini-2.5-flash"
+  model: "gemini-2.5-flash"  # You can leave it empty if your provider does NOT require a model parameter. However, at the moment this is only true for HackClub provider
   temperature: 0.7
   timeout: 30
   max-output-tokens: 4096
@@ -11,7 +11,7 @@ ai:
 # NOTE: setting a system prompt here will overwrite the current prompt
 # If left empty, the default system prompt will be used
 
-# Chat Configuration  
+# Chat Configuration
 chat:
   max-history: 5
   max-input-characters: 100

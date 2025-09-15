@@ -1,4 +1,4 @@
-package lt.domax.paperchat.domain.ai.providers.hackclub;
+package lt.domax.paperchat.domain.ai.providers;
 
 import lt.domax.paperchat.domain.ai.AIProvider;
 import lt.domax.paperchat.domain.ai.Provider;
@@ -12,16 +12,16 @@ import okhttp3.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
-@AIProvider("hackclub/openai")
-public class OpenAIProvider extends Provider {
+@AIProvider("hackclub")
+public class HackClubProvider extends Provider {
     private final String endpoint = "https://ai.hackclub.com/chat/completions";
     private OkHttpClient client;
 
-    public OpenAIProvider() {
+    public HackClubProvider() {
         super();
     }
 
-    public OpenAIProvider(String apiKey, String model, double temperature, int timeout, int maxOutputTokens, String systemPrompt) {
+    public HackClubProvider(String apiKey, String model, double temperature, int timeout, int maxOutputTokens, String systemPrompt) {
         super(apiKey, model, temperature, timeout, maxOutputTokens, systemPrompt);
         this.client = new OkHttpClient.Builder().connectTimeout(timeout, TimeUnit.SECONDS).readTimeout(timeout, TimeUnit.SECONDS).build();
     }
@@ -42,9 +42,8 @@ public class OpenAIProvider extends Provider {
                 JsonObject systemMessage = new JsonObject();
                 JsonObject userMessage = new JsonObject();
 
-                requestBody.addProperty("model", model);
                 requestBody.addProperty("temperature", temperature);
-                requestBody.addProperty("max_tokens", maxOutputTokens);
+                requestBody.addProperty("max_completion_tokens", maxOutputTokens);
 
                 systemMessage.addProperty("role", "system");
                 systemMessage.addProperty("content", systemPrompt);

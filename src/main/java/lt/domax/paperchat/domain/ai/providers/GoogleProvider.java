@@ -111,7 +111,7 @@ public class GoogleProvider extends Provider {
     }
 
     @Override
-    public boolean isAvailable() { return !apiKey.isEmpty() && client != null; }
+    public boolean isAvailable() { return !apiKey.isEmpty() && !model.isEmpty() && client != null; }
 
     @Override
     public void shutdown() {

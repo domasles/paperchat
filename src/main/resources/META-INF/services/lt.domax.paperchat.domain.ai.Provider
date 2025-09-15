@@ -1,3 +1,3 @@
 lt.domax.paperchat.domain.ai.providers.GoogleProvider
 lt.domax.paperchat.domain.ai.providers.OpenAIProvider
-lt.domax.paperchat.domain.ai.providers.hackclub.OpenAIProvider
+lt.domax.paperchat.domain.ai.providers.HackClubProvider
