@@ -33,7 +33,20 @@ public class ChatCommand implements CommandExecutor {
         }
 
         if (args.length < 2) {
+            if (args.length == 1 && args[0].equalsIgnoreCase("history")) {
+                chatService.showHistory(player.getName());
+                return true;
+            }
+            
+            if (args.length == 1 && args[0].equalsIgnoreCase("clear")) {
+                chatService.clearHistory(player.getName());
+                return true;
+            }
+            
             player.sendMessage("§cUsage: /paperchat <player> <message>");
+            player.sendMessage("§cOr: /paperchat history");
+            player.sendMessage("§cOr: /paperchat clear");
+
             return true;
         }
 

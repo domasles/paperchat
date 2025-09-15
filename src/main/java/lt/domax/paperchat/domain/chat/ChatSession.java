@@ -34,7 +34,10 @@ public class ChatSession {
     }
 
     public String getSessionId() { return sessionId; }
+    public List<ChatHistory> getHistoryEntries() { return new ArrayList<>(history); }
 
     public int getHistorySize() { return history.size(); }
     public boolean hasHistory() { return !history.isEmpty(); }
+    
+    public void clearHistory() { history.clear(); }
 }

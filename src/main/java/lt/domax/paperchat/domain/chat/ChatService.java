@@ -108,4 +108,30 @@ public class ChatService {
             player.sendMessage(message);
         }
     }
+
+    public void showHistory(String playerName) {
+        ChatSession session = playerManager.getOrCreateSession(playerName);
+        
+        if (!session.hasHistory()) {
+            notifyPlayer(playerName, "§aYou have no chat history.");
+            return;
+        }
+
+        notifyPlayer(playerName, "§aYour Chat History:");
+        
+        for (int i = 0; i < session.getHistorySize(); i++) {
+            ChatHistory entry = session.getHistoryEntries().get(i);
+            String timeStr = entry.getTimestamp().getHour() + ":" + String.format("%02d", entry.getTimestamp().getMinute());
+            
+            notifyPlayer(playerName, "§7[" + timeStr + "] §fYou: " + entry.getMessage());
+            notifyPlayer(playerName, "§7[" + timeStr + "] §6AI: " + entry.getResponse());
+            notifyPlayer(playerName, "");
+        }
+    }
+
+    public void clearHistory(String playerName) {
+        ChatSession session = playerManager.getOrCreateSession(playerName);
+        session.clearHistory();
+        notifyPlayer(playerName, "§aYour chat history has been cleared.");
+    }
 }
