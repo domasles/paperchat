@@ -90,8 +90,7 @@ export PAPERCHAT_MODEL="gemini-2.5-flash"
 
 ## Configuration
 
-PaperChat is configured entirely through environment variables:
-
+PaperChat is configured through either environment variables:
 
 | Variable | Description | Value |
 |----------|-------------|-------|
@@ -104,6 +103,29 @@ PaperChat is configured entirely through environment variables:
 | `PAPERCHAT_MAX_INPUT_CHARACTERS` | Maximum input message length | 100 |
 | `PAPERCHAT_MAX_OUTPUT_TOKENS` | Maximum response length | 4096 |
 | `PAPERCHAT_SYSTEM_PROMPT` | Custom system prompt for AI behavior | Your custom prompt (leaving empty uses default system prompt) |
+
+Or `config.yml` file located in the `data/plugins/PaperChat/` directory:
+
+```yaml
+ai:
+  api-key: ""  # You can leave it empty if your provider does NOT require an API key
+  provider: "google"
+  model: "gemini-2.5-flash"
+  temperature: 0.7
+  timeout: 30
+  max-output-tokens: 4096
+  system-prompt: ""  # Include your custom system prompt here
+
+# NOTE: setting a system prompt here will overwrite the current prompt
+# If left empty, the default system prompt will be used
+
+# Chat Configuration
+chat:
+  max-history: 5
+  max-input-characters: 100
+```
+
+Configuration in `config.yml` matches the environment variables. If both are set, `config.yml` file takes precedence.
 
 ### System Prompt Configuration
 
