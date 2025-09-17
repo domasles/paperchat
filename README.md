@@ -4,7 +4,7 @@
 
 PaperChat is a Minecraft server plugin that integrates AI language models directly into Minecraft. It allows players to send messages to AI assistants and get answers quickly, creating natural conversation experiences powered by Google Gemini and OpenAI models, with the ability to add your own!
 
-Built for Paper/Spigot servers, PaperChat maintains conversation history per player and provides a seamless bridge between Minecraft players and modern AI capabilities.
+Built for PaperMC servers, PaperChat maintains conversation history per player and provides a seamless bridge between Minecraft players and modern AI capabilities.
 
 ## Project Philosophy
 
@@ -56,7 +56,7 @@ docker-compose up --build
 #### Prerequisites
 - Java 21 or higher
 - Gradle 9.0 or higher
-- Paper/Spigot server 1.21.1+
+- PaperMC server 1.21+
 
 #### Building from Source
 
