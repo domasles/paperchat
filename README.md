@@ -125,14 +125,6 @@ chat:
 
 Configuration in `config.yml` matches the environment variables. If both are set, the environment takes precedence.
 
-### System Prompt Configuration
-
-The default system prompt sets the context to Minecraft with strict JSON formatting. You can customize it:
-
-```bash
-export PAPERCHAT_SYSTEM_PROMPT="Your custom AI behavior instructions here"
-```
-
 ## Usage
 
 ### Basic Commands
