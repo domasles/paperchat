@@ -6,6 +6,15 @@ PaperChat is a Minecraft server plugin that integrates AI language models direct
 
 Built for PaperMC servers, PaperChat maintains conversation history per player and provides a seamless bridge between Minecraft players and modern AI capabilities.
 
+## Official demos
+
+As this project is in its early beta stage, the official demo/beta builds are published here, on GitHub (check [Releases](https://github.com/domasles/paperchat/releases) and [Packages](https://github.com/users/domasles/packages?repo_name=paperchat) sections) and on [Modrinth](https://modrinth.com/project/vV2xfFAq) to be easily accessible by the community.
+
+Using links below you can find the latest builds on both platforms:
+
+- [Latest GitHub release](https://github.com/domasles/paperchat/releases/tag/v1.1.0-beta)
+- [Latest Modrinth release](https://modrinth.com/project/vV2xfFAq/version/1.1.0-beta)
+
 ## Project Philosophy
 
 PaperChat follows the "run it yourself" philosophy. By requiring your own AI API credentials and local deployment, you get:
