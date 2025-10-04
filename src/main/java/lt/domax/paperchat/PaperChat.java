@@ -10,6 +10,8 @@ import lt.domax.paperchat.domain.ai.Registry;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class PaperChat extends JavaPlugin {
+    private static PaperChat instance;
+
     private PlayerChatManager chatManager;
     private ChatCommand chatCommand;
     private ChatService chatService;
@@ -19,6 +21,8 @@ public class PaperChat extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        instance = this;
+
         getLogger().info("PaperChat starting up...");
         saveDefaultConfig();
 
@@ -44,19 +48,11 @@ public class PaperChat extends JavaPlugin {
         getLogger().info("PaperChat enabled successfully!");
     }
 
-    public String getConfigValue(String envKey, String ymlKey, String defaultValue) {
-        String envValue = System.getenv(envKey);
-        if (envValue != null && !envValue.isEmpty()) return envValue;
-
-        String ymlValue = getConfig().getString(ymlKey);
-        if (ymlValue != null && !ymlValue.isEmpty()) return ymlValue;
-
-        return defaultValue;
-    }
-
     @Override
     public void onDisable() {
         if (aiRegistry != null) aiRegistry.shutdown();
         getLogger().info("PaperChat disabled.");
     }
+
+    public static PaperChat getInstance() { return instance; }
 }

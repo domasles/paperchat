@@ -15,33 +15,22 @@ services:
     ports:
       - "0.0.0.0:25565:25565"
 
+    # Uncomment the following lines to use a custom .env file
+    # env_file:
+    #   - .env
+
     environment:
-      # We suggest you not tweak EULA and TYPE environment variables. They are baked in the image and modifying them may cause issues
+      # I suggest you not tweak EULA and TYPE environment variables. They are baked in the image and modifying them may cause issues
 
       VERSION: "1.21.1"
       MEMORY: 2G
       ONLINE_MODE: "FALSE"
-      SERVER_PORT: 25565
+      SERVER_PORT: 25565    # This should match the port mapping above
       ALLOW_CHEATS: "TRUE"
 
-      PAPERCHAT_API_KEY: ${PAPERCHAT_API_KEY}
-      PAPERCHAT_MAX_HISTORY: ${PAPERCHAT_MAX_HISTORY}
-
-      PAPERCHAT_PROVIDER: ${PAPERCHAT_PROVIDER}
-      PAPERCHAT_MODEL: ${PAPERCHAT_MODEL}
-
-      PAPERCHAT_TEMPERATURE: ${PAPERCHAT_TEMPERATURE}
-      PAPERCHAT_TIMEOUT: ${PAPERCHAT_TIMEOUT}
-
-      PAPERCHAT_MAX_INPUT_CHARACTERS: ${PAPERCHAT_MAX_INPUT_CHARACTERS}
-      PAPERCHAT_MAX_OUTPUT_TOKENS: ${PAPERCHAT_MAX_OUTPUT_TOKENS}
-
-      # Uncomment the following line to specify a custom system prompt
-      # PAPERCHAT_SYSTEM_PROMPT: ${PAPERCHAT_SYSTEM_PROMPT}
-
     # Uncomment the following lines to mount the built plugin jar from the host machine
-    # volumes:
-    #   - ./build/libs:/data/plugins
+    volumes:
+      - ./build/libs:/data/plugins
 
     stdin_open: true
     tty: true
