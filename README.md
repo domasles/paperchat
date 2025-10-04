@@ -4,7 +4,16 @@
 
 PaperChat is a Minecraft server plugin that integrates AI language models directly into Minecraft. It allows players to send messages to AI assistants and get answers quickly, creating natural conversation experiences powered by Google Gemini and OpenAI models, with the ability to add your own!
 
-Built for Paper/Spigot servers, PaperChat maintains conversation history per player and provides a seamless bridge between Minecraft players and modern AI capabilities.
+Built for PaperMC servers, PaperChat maintains conversation history per player and provides a seamless bridge between Minecraft players and modern AI capabilities.
+
+## Official demos
+
+As this project is in its early beta stage, the official demo/beta builds are published here, on GitHub (check [Releases](https://github.com/domasles/paperchat/releases) and [Packages](https://github.com/users/domasles/packages?repo_name=paperchat) sections) and on [Modrinth](https://modrinth.com/project/vV2xfFAq) to be easily accessible by the community.
+
+Using links below you can find the latest builds on both platforms:
+
+- [Latest GitHub release](https://github.com/domasles/paperchat/releases/tag/v1.1.0-beta)
+- [Latest Modrinth release](https://modrinth.com/project/vV2xfFAq/version/1.1.0-beta)
 
 ## Project Philosophy
 
@@ -56,7 +65,7 @@ docker-compose up --build
 #### Prerequisites
 - Java 21 or higher
 - Gradle 9.0 or higher
-- Paper/Spigot server 1.21.1+
+- PaperMC server 1.21+
 
 #### Building from Source
 
@@ -124,14 +133,6 @@ chat:
 ```
 
 Configuration in `config.yml` matches the environment variables. If both are set, the environment takes precedence.
-
-### System Prompt Configuration
-
-The default system prompt sets the context to Minecraft with strict JSON formatting. You can customize it:
-
-```bash
-export PAPERCHAT_SYSTEM_PROMPT="Your custom AI behavior instructions here"
-```
 
 ## Usage
 
